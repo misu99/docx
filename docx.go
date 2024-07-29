@@ -216,6 +216,7 @@ func ReadDocxFromFH(fh *multipart.FileHeader) (*ReplaceDocx, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer f.Close()
 	buff := bytes.NewBuffer([]byte{})
 	size, err := io.Copy(buff, f)
 	if err != nil {
