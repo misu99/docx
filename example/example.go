@@ -3,7 +3,7 @@ package main
 import (
 	"strconv"
 
-	"github.com/nguyenthenguyen/docx"
+	"github.com/misu99/docx"
 )
 
 // Note - this sample code does not perform error checking, etc.
@@ -25,7 +25,7 @@ func main() {
 	// Replace like https://golang.org/pkg/strings/#Replace
 	docx1.Replace("old_1_1", "new_1_1", -1)
 	docx1.Replace("old_1_2", "new_1_2", -1)
-	docx1.ReplaceLink("http://example.com/", "https://github.com/nguyenthenguyen/docx", 1)
+	docx1.ReplaceLink("http://example.com/", "https://github.com/misu99/docx", 1)
 	docx1.ReplaceHeader("out with the old", "in with the new")
 	docx1.ReplaceFooter("Change This Footer", "new footer")
 	docx1.WriteToFile("./new_result_1.docx")

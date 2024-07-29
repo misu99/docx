@@ -43,13 +43,13 @@ func loadFromFs(file string) *Docx {
 	return r.Editable()
 }
 
-//Tests that we are able to load a file from a filesystem and do a quick replacement test
+// Tests that we are able to load a file from a filesystem and do a quick replacement test
 func TestReadDocxFromFS(t *testing.T) {
 	d := loadFromFs(testFile)
 	simpleReplacementTest(d, t)
 }
 
-//Tests that we are able to load a file from a memory array of bytes
+// Tests that we are able to load a file from a memory array of bytes
 func TestReadDocxFromMemory(t *testing.T) {
 	d := loadFromMemory(testFile)
 	simpleReplacementTest(d, t)
@@ -112,7 +112,7 @@ func extractMiddle(start, end int, content string) string {
 
 func TestReplaceLink(t *testing.T) {
 	d := loadFile(testFile)
-	d.ReplaceLink("http://example.com/", "https://github.com/nguyenthenguyen/docx", -1)
+	d.ReplaceLink("http://example.com/", "https://github.com/misu99/docx", -1)
 	d.WriteToFile(testFileResult)
 
 	d = loadFile(testFileResult)
@@ -121,7 +121,7 @@ func TestReplaceLink(t *testing.T) {
 		t.Error("Missing 'http://example.com', got ", d.links)
 	}
 
-	if !strings.Contains(d.links, "https://github.com/nguyenthenguyen/docx") {
+	if !strings.Contains(d.links, "https://github.com/misu99/docx") {
 		t.Error("Expected 'word', got ", d.links)
 	}
 }
