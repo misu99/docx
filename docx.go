@@ -414,10 +414,40 @@ func (d *Docx) ImagesLen() int {
 	return len(d.images)
 }
 
+// 图片路径列表
 func (d *Docx) ImageList() []string {
 	var images []string
-	for key, _ := range d.images {
+	for key := range d.images {
 		images = append(images, key)
 	}
 	return images
+}
+
+// 读取指定路径文件内容
+func (d *Docx) ReadFile(fPath string) ([]byte, error) {
+	var targetFile *zip.File
+	for _, item := range d.files {
+		if item.Name == fPath {
+			targetFile = item
+			break
+		}
+	}
+
+	if targetFile == nil {
+		err := errors.New("file not found: " + fPath)
+		return nil, err
+	}
+
+	rc, err := targetFile.Open()
+	if err != nil {
+		return nil, err
+	}
+	defer rc.Close()
+
+	bfs, err := io.ReadAll(rc)
+	if err != nil {
+		return nil, err
+	}
+
+	return bfs, nil
 }
