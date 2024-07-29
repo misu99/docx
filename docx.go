@@ -10,6 +10,7 @@ import (
 	"io"
 	"io/fs"
 	"io/ioutil"
+	"mime/multipart"
 	"os"
 	"strings"
 )
@@ -197,6 +198,21 @@ func replaceHeaderFooter(headerFooter map[string]string, oldString string, newSt
 // ReadDocxFromFS opens a docx file from the file system
 func ReadDocxFromFS(file string, fs fs.FS) (*ReplaceDocx, error) {
 	f, err := fs.Open(file)
+	if err != nil {
+		return nil, err
+	}
+	buff := bytes.NewBuffer([]byte{})
+	size, err := io.Copy(buff, f)
+	if err != nil {
+		return nil, err
+	}
+	reader := bytes.NewReader(buff.Bytes())
+	return ReadDocxFromMemory(reader, size)
+}
+
+// ReadDocxFromFH open a docx file from the form file
+func ReadDocxFromFH(fh *multipart.FileHeader) (*ReplaceDocx, error) {
+	f, err := fh.Open()
 	if err != nil {
 		return nil, err
 	}
